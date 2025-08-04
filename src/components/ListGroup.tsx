@@ -1,18 +1,22 @@
 import { useState } from "react";
 
-function ListGroup() {
-  let items = ["New York", "San Francisco", "Tokyo", "London", "Paris"];
+interface Props {
+  items: string[];
+  heading: string;
+  onSelectItem: (item: string) => void;
+}
 
+function ListGroup({ items, heading, onSelectItem }: Props) {
   const [selectedIndex, setSelectedIndex] = useState(-1);
 
-  const getMessage = () => {
+  /* const getMessage = () => {
     return items.length === 0 ? <p>No item found</p> : null; //o puede escribirse items.length === 0 && <p>No item found</p> ;
-  }; // if cond = true el mensaje se cumple
+  }; // if cond = true el mensaje se cumple*/
 
   return (
     <>
-      <h1>Cities List</h1>
-      {getMessage()}
+      <h1>{heading}</h1>
+      {items.length === 0 && <p>No item found</p>}
       <ul className="list-group">
         {items.map((item, index) => (
           <li
@@ -24,6 +28,7 @@ function ListGroup() {
             key={item}
             onClick={() => {
               setSelectedIndex(index);
+              onSelectItem(item);
             }}
           >
             {item}
